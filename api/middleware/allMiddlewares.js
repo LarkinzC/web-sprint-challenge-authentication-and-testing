@@ -3,20 +3,23 @@ const { JWT_SECRET } = require('../../secrets/index')
 const jwt = require('jsonwebtoken')
 
 
- function restricted(req, res, next) {
-    const token = req.headers.authorization 
-    if(!token) {
-      return next({status:401, message: "Token required"})
-    } 
-    jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+function restricted(req, res, next) {
+  const token = req.headers.authorization;
+  console.log('token', token)
+  if (!token) {
+      return next({ status: 401, message: "Token required" });
+  } 
+  jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
       if (err) {
-        next({message: 'Token invalid' })
+          next({ status: 401, message: "Token invalid" });
       } else {
-        req.decodedToken = decodedToken
-        next()
+          req.decodedToken = decodedToken;
+          return next(); // Add a return statement here
       }
-    })
+  });
 }
+
+
 
 function bodyPresent(req, res, next) {
   const { username, password } = req.body;
