@@ -7,12 +7,18 @@ async function insert(newUser) {
     return db('users').where({ id })
 }
 
-function findByUsername(username) {
-    return db('users').where( {username} ).first()
+function findBy(filter) {
+    return db('users').where(filter)
 }
+
+async function add(newUser) {
+    const [id] = await db('users').insert(newUser)
+    return db('users').where({ id }).first()
+} 
 
 
 module.exports = {
     insert,
-    findByUsername
+    findBy,
+    add
 }
