@@ -1,7 +1,21 @@
 const User = require('../auth/auth-model');
-// const { JWT_SECRET } = require('../')
-async function restricted(req, res, next) {
-  
+const { JWT_SECRET } = require('../../secrets/index')
+const jwt = require('jsonwebtoken')
+
+
+ function restricted(req, res, next) {
+    const token = req.headers.authorization 
+    if(!token) {
+      return next({status:401, message: "Token required"})
+    } 
+    jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+      if (err) {
+        next({message: 'Token invalid' })
+      } else {
+        req.decodedToken = decodedToken
+        next()
+      }
+    })
 }
 
 function bodyPresent(req, res, next) {
