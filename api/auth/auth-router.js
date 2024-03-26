@@ -42,7 +42,7 @@ router.post('/register', bodyPresent, usernameAvailable, (req, res, next) => {
   */
 });
 
-router.post('/login', usernameExists, (req, res, next) => {
+router.post('/login', bodyPresent, usernameExists, (req, res, next) => {
 
   if(bcrypt.compareSync(req.body.password, req.user.password)) {
     console.log(req.user)
