@@ -16,9 +16,14 @@ async function add(newUser) {
     return db('users').where({ id }).first()
 } 
 
+function get() {
+    return db('users')
+}
+
 
 module.exports = {
     insert,
     findBy,
-    add
+    add,
+    get
 }

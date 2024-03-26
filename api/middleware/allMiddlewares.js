@@ -1,9 +1,7 @@
 const User = require('../auth/auth-model');
-
+// const { JWT_SECRET } = require('../')
 async function restricted(req, res, next) {
-  // Implementation of restricted middleware
-  // You need to implement the logic for token validation here
-  next(); // Temporary: Calls the next middleware or route handler
+  
 }
 
 function bodyPresent(req, res, next) {
